@@ -68,7 +68,7 @@ def gen_metadata(data):
     data["changelog"] = changelog
     data["state"] = "unstable"
     print(r,"prerelease")
-    if not r["prerelease"]:
+    if not r"prerelease":
         data["state"] = "stable"
     print(f"::set-output name=state::{data['state']}")
     return data
