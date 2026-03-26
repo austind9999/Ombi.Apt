@@ -98,6 +98,7 @@ def gen_pkg(data):
         "arm64": "linux-arm64.tar.gz",
     }
     url = f"https://github.com/{data['project']}/releases/download/{data['tag']}/{file_mapper[data['arch']]}"
+    print(url)
     r = requests.get(url, headers=headers)
     with closing(r), tarfile.open(fileobj=io.BytesIO(r.content), format="r:gz") as archive:
         archive.extractall(ver_dir + f"/{data['name']}")
