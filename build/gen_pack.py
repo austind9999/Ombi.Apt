@@ -66,9 +66,9 @@ def gen_metadata(data):
     changelog += r.get("body") if isinstance(r.get("body"), str) else ""
     changelog = changelog.replace('\n', '\n  ').replace('\r', '')
     data["changelog"] = changelog
-    data["state"] = "unstable"
+    data["state"] = "stable"
     print(f"::set-output name=state::{data['state']}")
-    if not r"prerelease":
+    if not r"stable":
         data["state"] = "stable"
     print(f"::set-output name=state::{data['state']}")
     return data
