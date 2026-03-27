@@ -36,7 +36,7 @@ jobs:
           #gpg_priv: ${{ secrets.GPG_PRIV }}
           #gpg_passphrase: ${{ secrets.GPG_PHRASE }}
           state: ${{ steps.build.outputs.state }}
-        secrets:
+        env:
           gpg_priv: ${{ secrets.GPG_PRIV }}
 
       - name: Add Debs
