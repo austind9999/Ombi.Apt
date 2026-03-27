@@ -1,7 +1,5 @@
 FROM ubuntu:focal
 
-ENV GPG_PRIV=${GPG_PRIV}
-
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -qq && \
