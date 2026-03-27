@@ -1,5 +1,7 @@
 name: "Publish using reprepro"
 description: "Creates, and manages a apt repo with reprepro"
+env:
+  GPG: '${{ secrets.GPG_PRIV }}'
 inputs:
   gpg_priv:
     description: "GPG private signing key"
