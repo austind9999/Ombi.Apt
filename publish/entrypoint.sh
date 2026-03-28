@@ -7,6 +7,8 @@ distro=jessie
 
 echo "${INPUT_STATE}"
 
+aptly db cleanup
+
 if [ "${INPUT_STATE}" == "stable" ]; then
     branch="master"
 
