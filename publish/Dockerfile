@@ -16,8 +16,7 @@ RUN apt-get update -qq && \
         aptly
 
 COPY /entrypoint.sh /entrypoint.sh
-COPY /clean.sh /clean.sh
 
-RUN chmod +x /entrypoint.sh /clean.sh
+RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
