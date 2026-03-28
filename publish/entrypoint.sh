@@ -1,13 +1,13 @@
 #!/bin/bash
 
+aptly db cleanup
+
 echo -e "${INPUT_GPG_PRIV}" | gpg --batch --import
 
 package=ombi
 distro=jessie
 
 echo "${INPUT_STATE}"
-
-aptly db cleanup
 
 if [ "${INPUT_STATE}" == "stable" ]; then
     branch="master"
