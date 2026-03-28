@@ -5,6 +5,8 @@ echo -e "${INPUT_GPG_PRIV}" | gpg --batch --import
 package=ombi
 distro=jessie
 
+aptly db cleanup
+
 echo "${INPUT_STATE}"
 
 if [ "${INPUT_STATE}" == "stable" ]; then
