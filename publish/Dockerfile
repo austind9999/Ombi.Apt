@@ -17,6 +17,8 @@ RUN apt-get update -qq && \
 
 COPY /entrypoint.sh /entrypoint.sh
 
+RUN aptly db cleanup
+
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
