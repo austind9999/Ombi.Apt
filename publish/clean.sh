@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#cd /source || exit
-
 echo -e "${INPUT_GPG_PRIV}" | gpg --batch --import
 
 package=ombi
