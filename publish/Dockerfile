@@ -20,4 +20,4 @@ COPY /clean.sh /clean.sh
 
 RUN chmod +x /entrypoint.sh /clean.sh
 
-ENTRYPOINT ["/clean.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
