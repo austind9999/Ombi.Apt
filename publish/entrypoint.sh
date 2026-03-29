@@ -20,6 +20,11 @@ fi
 
 echo "Found debs: $(find . -path './builds/*' -name '*.deb')"
 
+echo "TEST"
+aptly db cleanup -config="repo/${branch}.aptly.conf"
+
+echo "TESTTEST"
+
 find . -path "./builds/*" -name '*.deb' -exec aptly repo add -config="repo/${branch}.aptly.conf" "${package}" {} \;
 
 if [[ ! -d "./repo/public/${branch}/pool" ]]; then
