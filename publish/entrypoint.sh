@@ -1,6 +1,6 @@
 #!/bin/bash
 
-aptly db cleanup -config="repo/${branch}.aptly.conf
+aptly db cleanup -config="repo/${branch}.aptly.conf"
 
 echo -e "${INPUT_GPG_PRIV}" | gpg --batch --import
 
