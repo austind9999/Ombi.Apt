@@ -16,30 +16,16 @@ fi
 
 if [[ ! -d "./repo/${branch}/db" ]]; then
     aptly repo create -config="repo/${branch}.aptly.conf" -distribution="${distro}" "${package}"
-    echo "TEST"
-    aptly db cleanup -config="repo/${branch}.aptly.conf"
-    echo "TESTTEST"
+
 fi
 
 echo "Found debs: $(find . -path './builds/*' -name '*.deb')"
 aptly repo create -config="repo/${branch}.aptly.conf" -distribution="${distro}" "${package}"
-echo "TEST"
-aptly db cleanup -config="repo/${branch}.aptly.conf"
-echo "TESTTEST"
 
 find . -path "./builds/*" -name '*.deb' -exec aptly repo add -config="repo/${branch}.aptly.conf" "${package}" {} \;
 
-aptly repo create -config="repo/${branch}.aptly.conf" -distribution="${distro}" "${package}"
-echo "TEST"
-aptly db cleanup -config="repo/${branch}.aptly.conf"
-echo "TESTTEST"
-
 if [[ ! -d "./repo/public/${branch}/pool" ]]; then
-    echo "TEST"
-    aptly db cleanup -config="repo/${branch}.aptly.conf"
     aptly publish repo -config="repo/${branch}.aptly.conf" -batch -passphrase="${INPUT_GPG_PASSPHRASE}" ombi filesystem:public:${branch}
 else
-    echo "TEST"
-    aptly db cleanup -config="repo/${branch}.aptly.conf"
     aptly publish update -config="repo/${branch}.aptly.conf" -batch -passphrase="${INPUT_GPG_PASSPHRASE}" "${distro}" filesystem:public:${branch}
 fi
