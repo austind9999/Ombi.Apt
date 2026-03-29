@@ -16,14 +16,12 @@ fi
 
 if [[ ! -d "./repo/${branch}/db" ]]; then
     aptly repo create -config="repo/${branch}.aptly.conf" -distribution="${distro}" "${package}"
+    echo "TEST"
+    aptly db cleanup -config="repo/${branch}.aptly.conf"
+    echo "TESTTEST"
 fi
 
 echo "Found debs: $(find . -path './builds/*' -name '*.deb')"
-
-echo "TEST"
-aptly db cleanup -config="repo/${branch}.aptly.conf"
-
-echo "TESTTEST"
 
 find . -path "./builds/*" -name '*.deb' -exec aptly repo add -config="repo/${branch}.aptly.conf" "${package}" {} \;
 
