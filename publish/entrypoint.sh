@@ -1,7 +1,5 @@
 #!/bin/bash
 
-aptly db cleanup -config="repo/${branch}.aptly.conf"
-
 echo -e "${INPUT_GPG_PRIV}" | gpg --batch --import
 
 package=ombi
@@ -25,6 +23,8 @@ echo "Found debs: $(find . -path './builds/*' -name '*.deb')"
 find . -path "./builds/*" -name '*.deb' -exec aptly repo add -config="repo/${branch}.aptly.conf" "${package}" {} \;
 
 if [[ ! -d "./repo/public/${branch}/pool" ]]; then
+    echo "TEST"
+    aptly db cleanup -config="repo/${branch}.aptly.conf"
     aptly publish repo -config="repo/${branch}.aptly.conf" -batch -passphrase="${INPUT_GPG_PASSPHRASE}" ombi filesystem:public:${branch}
 else
     aptly publish update -config="repo/${branch}.aptly.conf" -batch -passphrase="${INPUT_GPG_PASSPHRASE}" "${distro}" filesystem:public:${branch}
