@@ -15,6 +15,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Install Aptly
+        run: sudo apt-get update && sudo apt-get install aptly -y
+
+      - name: Cleanup Database
+        run: |
+          aptly db cleanup -config="repo/develop.aptly.conf" -verbose
+          
+      - name: Remove Old Package Versions
+        run: |
+          aptly repo remove -config="repo/develop.aptly.conf" ombi 'Version (< 4.9.0)'
+          
+      - name: Cleanup Database After Package Removal
+        run: |
+          aptly db cleanup -config="repo/develop.aptly.conf"
+
       - name: Create Debs
         uses: ./build
         id: build
