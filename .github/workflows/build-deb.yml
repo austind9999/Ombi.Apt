@@ -16,7 +16,7 @@ jobs:
         
       - name: Create config file
         run: |
-          aptly repo create -config="repo/develop.aptly.conf" -distribution="${distro}" "${package}"
+          aptly repo create -config="repo/develop.aptly.conf" -distribution="jesse" "ombi"
 
       - name: Cleanup Database
         run: |
