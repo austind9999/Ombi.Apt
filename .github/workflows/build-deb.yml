@@ -20,4 +20,4 @@ jobs:
           
       - name: Remove Old Package Versions
         run: |
-          aptly repo remove -config="repo/develop.aptly.conf" 'develop, Version (< 4.1.0)' -dry-run
+          aptly repo remove -config="repo/develop.aptly.conf" 'jesse, Version (< 4.1.0)' -dry-run
