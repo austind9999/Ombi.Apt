@@ -13,14 +13,10 @@ jobs:
 
       - name: Install Aptly
         run: sudo apt-get update && sudo apt-get install aptly -y
-        
-      - name: Create config file
-        run: |
-          aptly repo create -config="repo/develop.aptly.conf" -distribution="jesse" "ombi"
 
       - name: Cleanup Database
         run: |
-          aptly db cleanup -config="repo/developy.aptly.conf" -dry-run -verbose
+          aptly db cleanup -config="repo/develop.aptly.conf" -dry-run -verbose
           
       - name: Remove Old Package Versions
         run: |
