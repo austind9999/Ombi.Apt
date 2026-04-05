@@ -1,4 +1,4 @@
-name: Build Binaries
+name: Clean Dev Repo
 
 on:
   workflow_dispatch:
@@ -15,43 +15,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Create Debs
-        uses: ./build
-        id: build
-        with:
-          repo: Ombi-app/Ombi
-          maintainer: Roxedus <me@roxedus.dev>
-          name: ombi
-          version: ${{ github.event.inputs.version }}
-          description: |
-            Want a Movie or TV Show on Plex or Emby? Use Ombi!
-            Ombi is a self-hosted web application that automatically gives your
-            shared Plex or Emby users the ability to request content by themselves!
-            Ombi can be linked to multiple TV Show and Movie DVR tools to create
-            a seamless end-to-end experience for your users.
+      - name: Install Aptly
+        run: sudo apt-get update && sudo apt-get install aptly -y
 
-      - name: Publish Debs
-        uses: ./publish
-        with:
-          gpg_priv: ${{ secrets.GPG_PRIV }}
-          gpg_passphrase: ${{ secrets.GPG_PHRASE }}
-          state: ${{ steps.build.outputs.state }}
-
-      - name: Add Debs
-        uses: EndBug/add-and-commit@v4 # You can change this to use a specific version
-        with:
-          add: repo
-          author_name: RoxBot
-          message: Added New Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: deploy
-        if: github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          cname: apt.ombi.app
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./repo/public
-          publish_branch: live
-          allow_empty_commit: "false"
+      - name: Cleanup Database
+        run: |
+          # Removes unreferenced packages and pool files
+          aptly db cleanup -config="repo/developy.aptly.conf" -dry-run -verbose
+          
+      - name: Remove Old Package Versions
+        run: |
+          aptly repo remove -config="repo/${branch}.aptly.conf" "${package}" '$Version (<< 4.1.0)' -dry-run
