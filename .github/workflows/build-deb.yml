@@ -2,10 +2,6 @@ name: Clean Dev Repo
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: "Version to publish"
-        required: true
 
 jobs:
   Deb:
@@ -17,12 +13,15 @@ jobs:
 
       - name: Install Aptly
         run: sudo apt-get update && sudo apt-get install aptly -y
+        
+      - name: Create config file
+        run: |
+          aptly repo create -config="repo/develop.aptly.conf" -distribution="${distro}" "${package}"
 
       - name: Cleanup Database
         run: |
-          # Removes unreferenced packages and pool files
           aptly db cleanup -config="repo/developy.aptly.conf" -dry-run -verbose
           
       - name: Remove Old Package Versions
         run: |
-          aptly repo remove -config="repo/${branch}.aptly.conf" "${package}" '$Version (<< 4.1.0)' -dry-run
+          aptly repo remove -config="repo/develop.aptly.conf" 'ombi, Version (<< 4.1.0)' -dry-run
