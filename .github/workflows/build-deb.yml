@@ -24,7 +24,7 @@ jobs:
           
       - name: Remove Old Package Versions
         run: |
-          aptly repo remove -config="repo/develop.aptly.conf" ombi 'Version (< 4.9.0)'
+          aptly repo remove -config="repo/develop.aptly.conf" ombi 'Version (<< 4.9.0)'
           
       - name: Cleanup Database After Package Removal
         run: |
